@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-int	main(void)
+int	main(int ac, char **av)
 {
 	int			sock;
 	int			listener;
@@ -20,14 +20,14 @@ int	main(void)
 		exit(1);
 	}
 	addr.sin_family = AF_INET;
-	addr.sin_port = htons(3422); // или любой другой порт соответствующий клиенту
+	addr.sin_port = htons(atoi(av[1]));// или любой другой порт соответствующий клиенту
 	addr.sin_addr.s_addr = htonl(INADDR_ANY);
 	if (bind(listener, (struct sockaddr *)&addr, sizeof(addr)) < 0)
 	{
 		perror("bind");
 		exit(2);
 	}
-	listen(listener, 1);
+	listen(listener, 2);
  	while (1)
 	{
 		sock = accept(listener, NULL, NULL);
@@ -36,14 +36,25 @@ int	main(void)
 			perror("accept");
 			exit(3);
 		}
-	while (1)
-	{
-		bytes_read = recv(sock, buf, 1024, 0);
-		if (bytes_read <= 0)
-			break;
-		send(sock, buf, bytes_read, 0);
-	}
-	close(sock);
+		switch (fork())
+		{
+			case (-1) :
+				perror("fork");
+				break ;
+			case (0) :
+				close (listener);
+				while (1)
+				{
+					bytes_read = recv(sock, buf, 1024, 0);
+					if (bytes_read <= 0)
+						break;
+					send(sock, buf, bytes_read, 0);
+				}
+				close(sock);
+				exit (0);
+			defult :
+				close (sock);
+		}
 	}
 	return (0);
 }
