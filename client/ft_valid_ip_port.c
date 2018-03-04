@@ -24,7 +24,7 @@ static int	ft_validport(char *port)
 	while (port[++i])
 		if (!ft_isdigit(port[i]))
 			return (-1);
-	if ((nbr = ft_atoi(port)) > (1 << 16))
+	if ((nbr = ft_atoi(port)) > 65535 || nbr < 1)
 		return (-1);
 	return (nbr);
 }
@@ -56,6 +56,7 @@ int			ft_valid_ip_port(char *ip, char *src_port)
 		ft_strerror("Error port");
 	if (!(prot = getprotobyname("tcp")))
 		ft_strerror("could not get protocol 'tcp'");
-	host = gethostbyname(ip);
+	if (!(host = gethostbyname(ip)))
+        ft_strerror("Error get host by name");
 	return (ft_conect(host, prot, port, ip));
 }

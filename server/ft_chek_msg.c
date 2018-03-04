@@ -76,7 +76,7 @@ static void	do_command(t_cli *cli, int nbr, size_t len)
 		ft_personal_message(cli, nbr);
 	else
 	{
-		send(nbr, "Invalid command\n", 15, 0);
+		send(nbr, "Invalid command\n", 16, 0);
 		ft_strdel(&(cli[nbr].r_buff));
 	}
 }

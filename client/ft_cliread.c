@@ -41,6 +41,8 @@ void		ft_read(int sock, char **name)
 		ft_strerror("Error reading");
 	if (buff[0] == '\n')
 		return;
+	if (buff[len - 1] != '\n')
+		ft_putchar('\n');
 	buff[len] = '\0';
 	if (!ft_strncmp(buff, "/nick ", 6))
 	{

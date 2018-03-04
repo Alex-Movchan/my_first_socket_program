@@ -5,7 +5,7 @@
 # include <netinet/in.h>
 # include <netdb.h>
 # include <arpa/inet.h>
-#include "libft/libft.h"
+#include "../libft/libft.h"
 
 void	ft_select(int sock, char *name);
 void	ft_strerror(char *str);

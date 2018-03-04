@@ -40,6 +40,7 @@ void	start_serv(int port_nbr, t_cli **cli)
 	sin.sin_port = htons(port_nbr);
 	if (bind(sock, (struct sockaddr *)&sin, sizeof(sin)) == -1)
 		ft_error("Error: bind");
+	ft_putendl(inet_ntoa(sin.sin_addr));
 	if (listen(sock, MAX_CLI) == -1)
 		ft_error("Error: listen");
 	(*cli)[sock].active = IS_SERV;
