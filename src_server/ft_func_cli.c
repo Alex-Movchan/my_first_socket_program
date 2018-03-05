@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_func_cli.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amovchan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/05 15:36:41 by amovchan          #+#    #+#             */
+/*   Updated: 2018/03/05 15:38:02 by amovchan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_serv.h"
 
-char		*ft_msg(char *name, char *buf)
+char	*ft_msg(char *name, char *buf)
 {
 	char	*msg;
 	int		len;
@@ -14,7 +26,7 @@ char		*ft_msg(char *name, char *buf)
 	return (msg);
 }
 
-void		w_cli(t_cli *cli, int nbr)
+void	w_cli(t_cli *cli, int nbr)
 {
 	char	*msg;
 	int		i;
@@ -59,13 +71,13 @@ int		ft_recvmsg(int sock, char **line)
 	return (2);
 }
 
-void		ft_read(t_cli *cli, int nbr)
+void	ft_read(t_cli *cli, int nbr)
 {
 	int		res;
 
 	if (cli[nbr].active == IS_SERV)
 		return (serv_read(&cli, nbr));
-	if (!(res = ft_recvmsg(nbr, &cli[nbr].r_buff)))//!(res = recv(nbr, buff, BUF_SIZE, 0)))
+	if (!(res = ft_recvmsg(nbr, &cli[nbr].r_buff)))
 	{
 		ft_msg_info(cli, nbr, "left the channel");
 		ft_printf("client №%d <%s> gone away\n", nbr - 2, cli[nbr].name);

@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_createcli.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amovchan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/05 15:28:08 by amovchan          #+#    #+#             */
+/*   Updated: 2018/03/05 15:29:17 by amovchan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_client.h"
 
-bool	ft_valid(char const *name, int len)
+bool		ft_valid(char const *name, int len)
 {
 	int		i;
 
 	i = -1;
 	while (name[++i])
 	{
-			if ((name[i] < 33 || name[i] > 125) && name[i] != '\n')
+		if ((name[i] < 33 || name[i] > 125) && name[i] != '\n')
 			return (false);
 	}
 	if (i >= len || i == 0)
@@ -34,7 +46,7 @@ static void	ft_join_channel(int sock)
 	send(sock, channel, ft_strlen(channel), 0);
 }
 
-char	*ft_createcli(int sock)
+char		*ft_createcli(int sock)
 {
 	char	name[12];
 

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_cliread.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: amovchan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/05 15:25:14 by amovchan          #+#    #+#             */
+/*   Updated: 2018/03/05 15:26:33 by amovchan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_client.h"
 
@@ -40,7 +51,7 @@ void		ft_read(int sock, char **name)
 	if ((len = read(STDIN_FILENO, buff, 1024)) == -1)
 		ft_strerror("Error reading");
 	if (buff[0] == '\n')
-		return;
+		return ;
 	if (buff[len - 1] != '\n')
 		ft_putchar('\n');
 	buff[len] = '\0';
@@ -49,7 +60,7 @@ void		ft_read(int sock, char **name)
 		if (!ft_valid(buff + 6, 10))
 		{
 			ft_putendl("Please enter a nickname between 1 and 9 chars long.");
-			return;
+			return ;
 		}
 		ft_strdel(name);
 		*name = ft_strndup(buff + 6, (size_t)len - 7);
