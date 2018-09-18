@@ -22,7 +22,7 @@ bool		ft_valid(char const *name, int len)
 		if ((name[i] < 33 || name[i] > 125) && name[i] != '\n')
 			return (false);
 	}
-	if (i >= len || i == 0)
+	if (i >= len || i == 1)
 		return (false);
 	return (true);
 }
