@@ -28,6 +28,7 @@ int		main(int ac, char **av)
 		ft_strerror("Usage: ./cli [ip][port]");
 	sock = ft_valid_ip_port(av[1], av[2]);
 	name = ft_createcli(sock);
+	ft_join_channel(sock);
 	ft_select(sock, name);
 	return (EXIT_SUCCESS);
 }

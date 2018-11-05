@@ -12,7 +12,7 @@
 
 #include "ft_client.h"
 
-bool		ft_valid(char const *name, int len)
+bool	ft_valid(char const *name, int len)
 {
 	int		i;
 
@@ -27,42 +27,59 @@ bool		ft_valid(char const *name, int len)
 	return (true);
 }
 
-static void	ft_join_channel(int sock)
+void	ft_join_channel(int sock)
 {
-	char channel[52];
+	char	channel[50];
+	ssize_t	len;
 
-	ft_bzero(channel, 52);
+	ft_bzero(channel, 50);
 	ft_putstr("choose a channel to join : #");
-	if (read(STDIN_FILENO, channel, 52) == -1)
-		ft_strerror("Error reading");
-	while (!ft_valid(channel, 50))
+	while (true)
 	{
-		ft_bzero(channel, 52);
-		ft_putendl("Please enter a channel between 1 and 49 chars long.");
-		ft_putstr("choose a channel to join : #");
-		if (read(STDIN_FILENO, channel, 52) == -1)
+		if ((len = read(STDIN_FILENO, channel, 50)) == -1)
 			ft_strerror("Error reading");
+		if (len > 0 && ft_valid(channel, 49))
+			break ;
+		if (len == 50)
+		{
+			while (channel[len - 1] != '\n')
+			{
+				if ((len = read(STDIN_FILENO, channel, 50)) == -1)
+					ft_strerror("Error reading");
+			}
+		}
+		ft_bzero(channel, 50);
+		ft_putendl_fd("Please enter a channel between 1 and 49 chars long.", STDERR_FILENO);
+		ft_putstr("choose a channel to join : #");
 	}
 	send(sock, channel, ft_strlen(channel), 0);
 }
 
 char		*ft_createcli(int sock)
 {
-	char	name[12];
+	char	name[10];
+	ssize_t	len;
 
-	ft_bzero(name, 12);
+	ft_bzero(name, 10);
 	ft_putstr("nickname : ");
-	if (read(STDIN_FILENO, name, 12) == -1)
-		ft_strerror("Error reading");
-	while (!ft_valid(name, 10))
+	while (true)
 	{
-		ft_bzero(name, 12);
-		ft_putendl("Please enter a nickname between 1 and 9 chars long.");
-		ft_putstr("nickname : ");
-		if (read(STDIN_FILENO, name, 12) == -1)
+		if ((len = read(STDIN_FILENO, name, 10)) == -1)
 			ft_strerror("Error reading");
+		if (len > 0 && len < 10 && ft_valid(name, 9))
+			break ;
+		if (len == 10)
+		{
+			while (name[len - 1] != '\n')
+			{
+				if ((len = read(STDIN_FILENO, name, 10)) == -1)
+					ft_strerror("Error reading");
+			}
+		}
+		ft_bzero(name, 10);
+		ft_putendl_fd("Please enter a nickname between 1 and 9 chars long.", STDERR_FILENO);
+		ft_putstr("nickname : ");
 	}
 	send(sock, name, ft_strlen(name), 0);
-	ft_join_channel(sock);
 	return (ft_strndup(name, ft_strlen(name) - 1));
 }

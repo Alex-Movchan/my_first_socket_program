@@ -23,8 +23,9 @@ void	ft_select(int sock, char *name);
 void	ft_strerror(char *str);
 int		ft_valid_ip_port(char *ip, char *port);
 char	*ft_createcli(int sock);
-void	ft_read(int sock, char **name);
+void	ft_read(int *sock, char **name);
 void	ft_recv(int sock, char **name);
 bool	ft_valid(char const *name, int len);
+void	ft_join_channel(int sock);
 
 #endif
