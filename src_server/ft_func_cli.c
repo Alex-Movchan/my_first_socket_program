@@ -80,7 +80,7 @@ void	ft_read(t_cli *cli, int nbr)
 	if (!(res = ft_recvmsg(nbr, &cli[nbr].r_buff)))
 	{
 		ft_msg_info(cli, nbr, "left the channel");
-		ft_printf("client №%d <%s> gone away\n", nbr - 2, cli[nbr].name);
+		ft_printf("client №%d <%s> gone away\n", nbr - 3, cli[nbr].name);
 		ft_strdel(&cli[nbr].r_buff);
 		ft_clean_cli(&(cli[nbr]));
 		close(nbr);
